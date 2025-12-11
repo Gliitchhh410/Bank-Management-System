@@ -41,14 +41,14 @@ public:
 class Customer
 {
     int customerId;
-    string name;
-    string email;
     vector<Account *> Accounts;
-
+    string name;
 public:
+    void setName(string );
+    void setCustomerId(int );
     int getCustomerId();
     void addAccount(Account *acc);
-    Account *getAccount(int id);
+    Account* getAccount(int id);
 };
 
 class Bank

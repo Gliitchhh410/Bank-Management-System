@@ -4,46 +4,55 @@
 #include "bank.h"
 using namespace std;
 
+void Bank::openAccount(int customerId, TYPE type)
+{
+    Customer *targetCustomer = nullptr;
 
-
-
-void Bank::openAccount(int customerId, TYPE type){
-    Customer* targetCustomer = nullptr;
-
-    for (auto &cust : Customers){
-        if (cust.getCustomerId() == customerId){
+    for (auto &cust : Customers)
+    {
+        if (cust.getCustomerId() == customerId)
+        {
             targetCustomer = &cust;
             break;
         }
     }
 
-    if (!targetCustomer){
+    if (!targetCustomer)
+    {
         cout << "Error: Customer ID not found" << endl;
         return;
     }
 
-    Account* newAccount = nullptr;
+    Account *newAccount = nullptr;
     int newAccId = rand() * 1000;
 
+    switch (type)
+    {
+    case SAVING:
+        newAccount = new SavingsAccount();
+        break;
 
-    switch( type ){
-        case SAVING:
-            newAccount = new SavingsAccount();
-            break;
-        
-        case CHECKING:
-            newAccount = new CheckingAccount();
-            break;
+    case CHECKING:
+        newAccount = new CheckingAccount();
+        break;
 
-        default:
+    default:
         cout << "Invalid Account Type" << endl;
         return;
     }
 
-
-
-    if (newAccount != nullptr){
-        targetCustomer -> addAccount(newAccount);
+    if (newAccount != nullptr)
+    {
+        targetCustomer->addAccount(newAccount);
         cout << "account created successfully!!" << endl;
     }
+}
+
+void Bank::createCustomer(string name)
+{
+    Customer newCustomer;
+
+    newCustomer.setName(name);
+    newCustomer.setCustomerId(rand() * 1000);
+    Customers.push_back(move(newCustomer)); //move for passing objects without creating extra copies
 }
