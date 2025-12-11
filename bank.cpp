@@ -5,7 +5,9 @@
 using namespace std;
 
 
-void Bank::openAccount(int customerId, string type){
+
+
+void Bank::openAccount(int customerId, TYPE type){
     Customer* targetCustomer = nullptr;
 
     for (auto &cust : Customers){
@@ -24,5 +26,24 @@ void Bank::openAccount(int customerId, string type){
     int newAccId = rand() * 1000;
 
 
-    
+    switch( type ){
+        case SAVING:
+            newAccount = new SavingsAccount();
+            break;
+        
+        case CHECKING:
+            newAccount = new CheckingAccount();
+            break;
+
+        default:
+        cout << "Invalid Account Type" << endl;
+        return;
+    }
+
+
+
+    if (newAccount != nullptr){
+        targetCustomer -> addAccount(newAccount);
+        cout << "account created successfully!!" << endl;
+    }
 }

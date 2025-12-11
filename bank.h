@@ -3,6 +3,14 @@
 #include <string>
 using namespace std;
 
+
+enum TYPE {
+    CHECKING,
+    SAVING
+};
+
+
+
 class Transaction
 {
     int transactionId;
@@ -48,7 +56,7 @@ class Bank
 public:
     vector<Customer> Customers;
     void createCustomer(string name);
-    void openAccount(int customerId, string type);
+    void openAccount(int customerId, TYPE type);
 };
 
 class SavingsAccount : public Account
