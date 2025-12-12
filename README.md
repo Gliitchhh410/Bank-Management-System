@@ -1,45 +1,70 @@
-# Bank-Management-System
+# Bank Management System (OOP Design)
 
-A project implementing low level design principles and design patterns after studying them in OOP with C++ in the 9-month ITI Program for open-source development track.
+A robust, console-based banking application designed using C++ to demonstrate core **Object-Oriented Programming (OOP)** principles. This system manages customers, multiple account types, and transaction histories with a focus on **Encapsulation**, **Polymorphism**, and **Memory Management**.
 
-## Features
+## Key Features
 
-- Account management (create, update, delete accounts)
-- Transaction processing (deposits, withdrawals, transfers)
-- Balance inquiries
-- Transaction history tracking
-- Design patterns implementation (Singleton, Factory, Strategy, etc.)
+- **Customer Management:** Create and manage customer identities.
+- **Multiple Account Types:**
+  - **Savings Account:** Earns interest; strictly prevents overdrafts.
+  - **Checking Account:** Supports overdraft limits for flexible withdrawals.
+- **Transaction History:** Every deposit/withdrawal is logged immutably (date, type, amount).
+- **Polymorphic Behavior:** Unified interface (`Account`) for different account behaviors.
+- **Factory Logic:** Centralized account creation logic within the Bank class.
 
-## Technologies
+## System Architecture
 
-- C++
-- Object-Oriented Programming principles
-- Design patterns and SOLID principles
+The project follows a modular design emphasizing the **SOLID** principles.
 
-## Getting Started
+### Class Overview
 
-### Prerequisites
+| Class               | Responsibility                                                                           |
+| :------------------ | :--------------------------------------------------------------------------------------- |
+| **Bank**            | Acts as the entry point and Factory for creating accounts.                               |
+| **Customer**        | Holds personal details and a list of `Account` pointers.                                 |
+| **Account**         | **Abstract Base Class**. Defines the interface and holds shared data (Balance, History). |
+| **SavingsAccount**  | Implements specific rules for interest and safe withdrawals.                             |
+| **CheckingAccount** | Implements specific rules for overdrafts.                                                |
+| **Transaction**     | Represents an immutable record of a financial event.                                     |
 
-- C++ compiler (C++11 or later)
-- Git
+### UML Relationship Simplified
 
-### Installation
+- **Bank** _has-many_ **Customers**
+- **Customer** _has-many_ **Accounts** (Polymorphic List)
+- **Account** _has-many_ **Transactions**
+- **Savings/Checking** _is-an_ **Account**
 
-1. Clone the repository
-2. Navigate to the project directory
-3. Compile the project
-4. Run the executable
+## Technical Implementation Details
 
-## Project Structure
+- **Language:** C++ (Standard 11/14+)
+- **Polymorphism:** Usage of `virtual` functions for `withdraw()` logic and `virtual` destructors for safe memory cleanup.
+- **Encapsulation:** Protected members (`balance`) allow derived classes access while hiding data from the public scope.
+- **Design Pattern:** Uses the **Factory Design Pattern** in `Bank::openAccount` to decouple object creation from client code.
 
-- `/src` - Source code files
-- `/include` - Header files
-- `/tests` - Unit tests
+## Todo List & Roadmap
 
-## Contributing
+Completed Phase 1 (Core Logic)
 
-Contributions are welcome! Please follow coding standards and include tests for new features.
+-- [x] Design Class Hierarchy (Bank, Customer, Account)
 
-## License
+- [x] Implement Inheritance for Account Types (Savings/Checking)
 
-MIT License
+- [x] Implement Polymorphism for withdraw logic
+
+- [x] Create Transaction logging system
+
+- [x] Implement Factory Logic for Account creation
+
+Phase 2 (Upcoming Features)
+
+- [ ] Transfer Feature: Implement transfer(Account\* to, double amount)
+
+- [ ] Input Validation: Prevent negative inputs for deposit/withdraw
+
+- [ ] Search: Implement findCustomerById or findAccountById
+
+- [ ] Persistence: Save Customer and Account data to a text file/database
+
+- [ ] Refactoring: Replace raw pointers with std::unique_ptr or std::shared_ptr
+
+### Designed by [Your Name] as a study in Advanced OOP Architecture.
