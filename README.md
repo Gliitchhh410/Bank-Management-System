@@ -45,7 +45,7 @@ The project follows a modular design emphasizing the **SOLID** principles.
 
 Completed Phase 1 (Core Logic)
 
--- [x] Design Class Hierarchy (Bank, Customer, Account)
+- [x] Design Class Hierarchy (Bank, Customer, Account)
 
 - [x] Implement Inheritance for Account Types (Savings/Checking)
 
