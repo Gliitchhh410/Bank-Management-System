@@ -67,4 +67,4 @@ Phase 2 (Upcoming Features)
 
 - [ ] Refactoring: Replace raw pointers with std::unique_ptr or std::shared_ptr
 
-### Designed by [Ahmed Mounir] as a study in Advanced OOP Architecture.
+### Designed by Ahmed Mounir as a study in Advanced OOP Architecture.
