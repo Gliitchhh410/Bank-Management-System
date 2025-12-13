@@ -54,6 +54,33 @@ void Bank::createCustomer(string name)
 
     newCustomer.setName(name);
     newCustomer.setCustomerId(rand() * 1000);
-    Customers.push_back(move(newCustomer)); //move for passing objects without creating extra copies
+    Customers.push_back(move(newCustomer)); // move for passing objects without creating extra copies
 }
 
+void Customer::setName(string n)
+{
+    name = n;
+}
+
+void Customer::setCustomerId(int d)
+{
+    customerId = d;
+}
+
+int Customer::getCustomerId()
+{
+    return customerId;
+}
+
+void Customer::addAccount(Account *acc)
+{
+    Accounts.push_back(acc);
+}
+
+Account* Customer::getAccount(int accountNumber){
+    for (auto& acc: Accounts){
+        if (accountNumber == acc->getAccountNumber()){
+            return acc;
+        }
+    }
+}

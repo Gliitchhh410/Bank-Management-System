@@ -3,13 +3,11 @@
 #include <string>
 using namespace std;
 
-
-enum TYPE {
+enum TYPE
+{
     CHECKING,
     SAVING
 };
-
-
 
 class Transaction
 {
@@ -32,6 +30,7 @@ protected:
     vector<Transaction> transactionHistroy;
 
 public:
+    int getAccountNumber();
     void deposit(double amount);
     virtual void withdraw(double amount) = 0;
     virtual ~Account();
@@ -43,12 +42,13 @@ class Customer
     int customerId;
     vector<Account *> Accounts;
     string name;
+
 public:
-    void setName(string );
-    void setCustomerId(int );
+    void setName(string);
+    void setCustomerId(int);
     int getCustomerId();
     void addAccount(Account *acc);
-    Account* getAccount(int id);
+    Account *getAccount(int id);
 };
 
 class Bank
@@ -76,12 +76,15 @@ public:
     void withdraw(double amount);
 };
 
-
-class AccountFactory {
-    public:
+class AccountFactory
+{
+public:
     virtual Account createAccount() = 0;
 };
 
-
-class CheckingAccountFactory: public AccountFactory {};
-class SavingsAccountFactory: public AccountFactory {};
+class CheckingAccountFactory : public AccountFactory
+{
+};
+class SavingsAccountFactory : public AccountFactory
+{
+};
