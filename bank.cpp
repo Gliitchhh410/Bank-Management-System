@@ -56,3 +56,4 @@ void Bank::createCustomer(string name)
     newCustomer.setCustomerId(rand() * 1000);
     Customers.push_back(move(newCustomer)); //move for passing objects without creating extra copies
 }
+

@@ -75,3 +75,13 @@ class CheckingAccount : public Account
 public:
     void withdraw(double amount);
 };
+
+
+class AccountFactory {
+    public:
+    virtual Account createAccount() = 0;
+};
+
+
+class CheckingAccountFactory: public AccountFactory {};
+class SavingsAccountFactory: public AccountFactory {};
