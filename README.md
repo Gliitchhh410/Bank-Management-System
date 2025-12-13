@@ -55,6 +55,8 @@ Completed Phase 1 (Core Logic)
 
 - [x] Implement Factory Logic for Account creation
 
+- [x] Implement a working prototype for Customer/Account/Transactions Classes
+
 Phase 2 (Upcoming Features)
 
 - [ ] Transfer Feature: Implement transfer(Account\* to, double amount)
