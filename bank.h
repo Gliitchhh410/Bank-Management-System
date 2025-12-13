@@ -79,7 +79,7 @@ public:
 class AccountFactory
 {
 public:
-    virtual Account createAccount() = 0;
+    virtual Account* createAccount() = 0;
 };
 
 class CheckingAccountFactory : public AccountFactory
