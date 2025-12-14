@@ -56,7 +56,7 @@ class Bank
 public:
     vector<Customer> Customers;
     void createCustomer(string name);
-    void openAccount(int customerId, TYPE type);
+    void openAccount(AccountFactory* factory ,int customerId, TYPE type);
 };
 
 class SavingsAccount : public Account

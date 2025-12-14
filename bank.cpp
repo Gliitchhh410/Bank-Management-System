@@ -4,7 +4,7 @@
 #include "bank.h"
 using namespace std;
 
-void Bank::openAccount(int customerId, TYPE type)
+void Bank::openAccount(AccountFactory* factory, customerId, TYPE type)
 {
     Customer *targetCustomer = nullptr;
 
@@ -26,20 +26,7 @@ void Bank::openAccount(int customerId, TYPE type)
     Account *newAccount = nullptr;
     int newAccId = rand() * 1000;
 
-    switch (type)
-    {
-    case SAVING:
-        newAccount = new SavingsAccount();
-        break;
-
-    case CHECKING:
-        newAccount = new CheckingAccount();
-        break;
-
-    default:
-        cout << "Invalid Account Type" << endl;
-        return;
-    }
+    newAccount = factory->createAccount();
 
     if (newAccount != nullptr)
     {
