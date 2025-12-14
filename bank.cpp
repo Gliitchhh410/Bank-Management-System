@@ -92,3 +92,14 @@ string Transaction::getDetails()
 {
     return "Transaction Number: " + to_string(transactionId) + ", Amount: " + to_string(amount) + ", Type: " + type;
 }
+
+
+Account* CheckingAccountFactory::createAccount(){
+    return new CheckingAccount;
+}
+
+Account* SavingsAccountFactory::createAccount(){
+    return new SavingsAccount;
+}
+
+
