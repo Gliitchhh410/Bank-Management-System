@@ -86,6 +86,8 @@ Account *Customer::getAccount(int accountNumber)
             return acc;
         }
     }
+
+    return nullptr;
 }
 
 string Transaction::getDetails()
