@@ -4,7 +4,7 @@
 #include "bank.h"
 using namespace std;
 
-void Bank::openAccount(AccountFactory* factory, int customerId, TYPE type)
+void Bank::openAccount(AccountFactory *factory, int customerId)
 {
     Customer *targetCustomer = nullptr;
 
@@ -82,13 +82,12 @@ string Transaction::getDetails()
     return "Transaction Number: " + to_string(transactionId) + ", Amount: " + to_string(amount) + ", Type: " + type;
 }
 
-
-Account* CheckingAccountFactory::createAccount(){
+Account *CheckingAccountFactory::createAccount()
+{
     return new CheckingAccount;
 }
 
-Account* SavingsAccountFactory::createAccount(){
+Account *SavingsAccountFactory::createAccount()
+{
     return new SavingsAccount;
 }
-
-
