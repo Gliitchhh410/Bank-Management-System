@@ -77,11 +77,18 @@ void Customer::addAccount(Account *acc)
     Accounts.push_back(acc);
 }
 
-Account* Customer::getAccount(int accountNumber){
-    for (auto& acc: Accounts){
-        if (accountNumber == acc->getAccountNumber()){
+Account *Customer::getAccount(int accountNumber)
+{
+    for (auto &acc : Accounts)
+    {
+        if (accountNumber == acc->getAccountNumber())
+        {
             return acc;
         }
     }
 }
 
+string Transaction::getDetails()
+{
+    return "Transaction Number: " + to_string(transactionId) + ", Amount: " + to_string(amount) + ", Type: " + type;
+}
