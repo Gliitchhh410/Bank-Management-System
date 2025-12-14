@@ -4,7 +4,7 @@
 #include "bank.h"
 using namespace std;
 
-void Bank::openAccount(AccountFactory* factory, customerId, TYPE type)
+void Bank::openAccount(AccountFactory* factory, int customerId, TYPE type)
 {
     Customer *targetCustomer = nullptr;
 
