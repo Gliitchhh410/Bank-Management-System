@@ -79,7 +79,7 @@ Account *Customer::getAccount(int accountNumber)
 
 string Transaction::getDetails()
 {
-    return "Transaction Number: " + to_string(transactionId) + ", Amount: " + to_string(amount) + ", Type: " + type;
+    return "Transaction Number: " + to_string(transactionId) + ", Amount: " + to_string(amount);
 }
 
 Transaction::Transaction(int transactionId, double amount, TRANSACTION_TYPE type)

@@ -3,6 +3,10 @@
 #include <string>
 using namespace std;
 
+class Account;
+class Customer;
+
+
 enum TRANSACTION_TYPE
 {
     WITHDRAW,
