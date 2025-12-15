@@ -30,7 +30,7 @@ class Account
 
 protected:
     double balance;
-    void addTransaction(string type, double amount);
+    void addTransaction(TRANSACTION_TYPE type, double amount);
     vector<Transaction> transactionHistroy;
 
 public:

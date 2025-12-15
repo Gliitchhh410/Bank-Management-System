@@ -24,7 +24,7 @@ void Bank::openAccount(AccountFactory *factory, int customerId)
     }
 
     Account *newAccount = nullptr;
-    int newAccId = rand() * 1000;
+    int newAccId = rand() % 10000;
 
     newAccount = factory->createAccount();
 
