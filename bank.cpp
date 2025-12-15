@@ -89,12 +89,26 @@ Transaction::Transaction(int transactionId, double amount, TRANSACTION_TYPE type
     this->type = type;
 }
 
+
+Account::Account(int accNum){
+    this->balance = 0.0;
+    this->accountNumber = accNum;
+}
+
 Account *CheckingAccountFactory::createAccount(int id)
 {
     return new CheckingAccount(id);
 }
 
+SavingsAccount::SavingsAccount(int id): Account(id){
+    this->interestRate = 0.05;
+}
 Account *SavingsAccountFactory::createAccount(int id)
 {
     return new SavingsAccount(id);
+}
+
+
+CheckingAccount::CheckingAccount(int id): Account(id){
+    this->overdraftLimit = 500.0;
 }

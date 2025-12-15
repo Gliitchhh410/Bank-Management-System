@@ -25,6 +25,7 @@ public:
 
 class Account
 {
+    
     int accountNumber;
 
 protected:
@@ -66,20 +67,20 @@ public:
 class SavingsAccount : public Account
 {
     public:
-    SavingsAccount(int id): Account(id){}
+    SavingsAccount(int id);
     private:
     double interestRate;
     void applyInterest();
 
 public:
-    SavingsAccount(int id) : Account(id) {}
+    SavingsAccount(int id);
     void withdraw(double amount);
 };
 
 class CheckingAccount : public Account
 {
     public:
-    CheckingAccount(int id): Account(id){}
+    CheckingAccount(int id);
     private:
     double overdraftLimit;
 
