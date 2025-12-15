@@ -4,6 +4,10 @@
 #include "bank.h"
 using namespace std;
 
+
+
+/*----------------------------------Bank---------------------------------------*/
+
 void Bank::openAccount(AccountFactory *factory, int customerId)
 {
     Customer *targetCustomer = nullptr;
@@ -44,6 +48,11 @@ void Bank::createCustomer(string name)
     Customers.push_back(move(newCustomer)); // move for passing objects without creating extra copies
 }
 
+
+/*----------------------------------Customer---------------------------------------*/
+
+
+
 void Customer::setName(string n)
 {
     name = n;
@@ -77,6 +86,9 @@ Account *Customer::getAccount(int accountNumber)
     return nullptr;
 }
 
+
+
+/*----------------------------------Transaction---------------------------------------*/
 string Transaction::getDetails()
 {
     return "Transaction Number: " + to_string(transactionId) + ", Amount: " + to_string(amount);
@@ -90,15 +102,33 @@ Transaction::Transaction(int transactionId, double amount, TRANSACTION_TYPE type
 }
 
 
+
+
+/*----------------------------------Account---------------------------------------*/
+
+
 Account::Account(int accNum){
     this->balance = 0.0;
     this->accountNumber = accNum;
 }
 
+
+
+/*----------------------------------CheckingAccount---------------------------------------*/
+
 Account *CheckingAccountFactory::createAccount(int id)
 {
     return new CheckingAccount(id);
 }
+
+
+CheckingAccount::CheckingAccount(int id): Account(id){
+    this->overdraftLimit = 500.0;
+}
+
+
+
+/*----------------------------------SavingsAccount---------------------------------------*/
 
 SavingsAccount::SavingsAccount(int id): Account(id){
     this->interestRate = 0.05;
@@ -108,7 +138,3 @@ Account *SavingsAccountFactory::createAccount(int id)
     return new SavingsAccount(id);
 }
 
-
-CheckingAccount::CheckingAccount(int id): Account(id){
-    this->overdraftLimit = 500.0;
-}
