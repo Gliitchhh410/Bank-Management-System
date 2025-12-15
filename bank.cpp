@@ -82,6 +82,13 @@ string Transaction::getDetails()
     return "Transaction Number: " + to_string(transactionId) + ", Amount: " + to_string(amount) + ", Type: " + type;
 }
 
+Transaction::Transaction(int transactionId, double amount, TRANSACTION_TYPE type)
+{
+    this->transactionId = transactionId;
+    this->amount = amount;
+    this->type = type;
+}
+
 Account *CheckingAccountFactory::createAccount()
 {
     return new CheckingAccount;

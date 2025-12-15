@@ -3,20 +3,20 @@
 #include <string>
 using namespace std;
 
-enum TYPE
+enum TRANSACTION_TYPE
 {
-    CHECKING,
-    SAVING
+    WITHDRAW,
+    DEPOSIT
 };
 
 class Transaction
 {
     int transactionId;
     double amount;
-    string date;
-    string type;
+    TRANSACTION_TYPE type;
 
 public:
+    Transaction(int transactionId, double amount, TRANSACTION_TYPE type);
     string getDetails();
 };
 
@@ -56,7 +56,7 @@ class Bank
 public:
     vector<Customer> Customers;
     void createCustomer(string name);
-    void openAccount(AccountFactory* factory ,int customerId);
+    void openAccount(AccountFactory *factory, int customerId);
 };
 
 class SavingsAccount : public Account
