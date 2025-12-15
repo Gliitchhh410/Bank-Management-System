@@ -6,7 +6,6 @@ using namespace std;
 class Account;
 class Customer;
 
-
 enum TRANSACTION_TYPE
 {
     WITHDRAW,
@@ -34,6 +33,7 @@ protected:
     vector<Transaction> transactionHistroy;
 
 public:
+    Account(int accNum);
     int getAccountNumber();
     void deposit(double amount);
     virtual void withdraw(double amount) = 0;
@@ -65,15 +65,22 @@ public:
 
 class SavingsAccount : public Account
 {
+    public:
+    SavingsAccount(int id): Account(id){}
+    private:
     double interestRate;
     void applyInterest();
 
 public:
+    SavingsAccount(int id) : Account(id) {}
     void withdraw(double amount);
 };
 
 class CheckingAccount : public Account
 {
+    public:
+    CheckingAccount(int id): Account(id){}
+    private:
     double overdraftLimit;
 
 public:
@@ -83,14 +90,14 @@ public:
 class AccountFactory
 {
 public:
-    virtual Account *createAccount() = 0;
+    virtual Account *createAccount(int id) = 0;
 };
 
 class CheckingAccountFactory : public AccountFactory
 {
-    Account *createAccount();
+    Account *createAccount(int id);
 };
 class SavingsAccountFactory : public AccountFactory
 {
-    Account *createAccount();
+    Account *createAccount(int id);
 };

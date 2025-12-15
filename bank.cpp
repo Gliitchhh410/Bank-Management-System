@@ -26,7 +26,7 @@ void Bank::openAccount(AccountFactory *factory, int customerId)
     Account *newAccount = nullptr;
     int newAccId = rand() % 10000;
 
-    newAccount = factory->createAccount();
+    newAccount = factory->createAccount(newAccId);
 
     if (newAccount != nullptr)
     {
@@ -89,12 +89,12 @@ Transaction::Transaction(int transactionId, double amount, TRANSACTION_TYPE type
     this->type = type;
 }
 
-Account *CheckingAccountFactory::createAccount()
+Account *CheckingAccountFactory::createAccount(int id)
 {
-    return new CheckingAccount;
+    return new CheckingAccount(id);
 }
 
-Account *SavingsAccountFactory::createAccount()
+Account *SavingsAccountFactory::createAccount(int id)
 {
-    return new SavingsAccount;
+    return new SavingsAccount(id);
 }
