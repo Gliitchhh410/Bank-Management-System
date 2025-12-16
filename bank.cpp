@@ -142,6 +142,9 @@ Account *CheckingAccountFactory::createAccount(int id)
     return new CheckingAccount(id);
 }
 
+
+
+
 CheckingAccount::CheckingAccount(int id) : Account(id)
 {
     this->overdraftLimit = 500.0;
@@ -152,6 +155,18 @@ CheckingAccount::CheckingAccount(int id) : Account(id)
 SavingsAccount::SavingsAccount(int id) : Account(id)
 {
     this->interestRate = 0.05;
+}
+
+void SavingsAccount::withdraw(double amount){
+    if (balance >= amount){
+        balance -= amount;
+        addTransaction(WITHDRAW, amount);
+        cout << "Withdrew: " << amount << ". New Balance: " << balance << endl;
+
+    }
+    else {
+        cout << "Error: Insufficient funds (Savings)" << endl;
+    }
 }
 Account *SavingsAccountFactory::createAccount(int id)
 {
