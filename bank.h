@@ -42,27 +42,6 @@ public:
     void printStatement();
 };
 
-class Customer
-{
-    int customerId;
-    vector<Account *> Accounts;
-    string name;
-
-public:
-    void setName(string);
-    void setCustomerId(int);
-    int getCustomerId();
-    void addAccount(Account *acc);
-    Account *getAccount(int id);
-};
-
-class Bank
-{
-public:
-    vector<Customer> Customers;
-    void createCustomer(string name);
-    void openAccount(AccountFactory *factory, int customerId);
-};
 
 class SavingsAccount : public Account
 {
@@ -88,6 +67,7 @@ public:
     void withdraw(double amount);
 };
 
+
 class AccountFactory
 {
 public:
@@ -102,3 +82,28 @@ class SavingsAccountFactory : public AccountFactory
 {
     Account *createAccount(int id);
 };
+
+
+class Customer
+{
+    int customerId;
+    vector<Account *> Accounts;
+    string name;
+
+public:
+    void setName(string);
+    void setCustomerId(int);
+    int getCustomerId();
+    void addAccount(Account *acc);
+    Account *getAccount(int id);
+};
+
+class Bank
+{
+public:
+    vector<Customer> Customers;
+    void createCustomer(string name);
+    void openAccount(AccountFactory *factory, int customerId);
+};
+
+
