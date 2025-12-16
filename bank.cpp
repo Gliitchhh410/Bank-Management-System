@@ -142,7 +142,16 @@ Account *CheckingAccountFactory::createAccount(int id)
     return new CheckingAccount(id);
 }
 
-
+void CheckingAccount::withdraw(double amount){
+    if (balance + overdraftLimit >= amount ){
+        balance -= amount;
+        addTransaction(WITHDRAW, amount);
+        cout << "Withdrew: " << amount << ". New Balance: " << balance << endl;
+    }
+    else {
+        cout << "Error: Exceeded Overdraft Limit" << endl;
+    }
+}
 
 
 CheckingAccount::CheckingAccount(int id) : Account(id)
