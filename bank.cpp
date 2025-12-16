@@ -102,6 +102,9 @@ Account::Account(int accNum)
     this->accountNumber = accNum;
 }
 
+Account::~Account(){};
+
+
 void Account::addTransaction(TRANSACTION_TYPE type, double amount)
 {
     int txId = rand() % 10000;
@@ -113,6 +116,8 @@ int Account::getAccountNumber()
 {
     return accountNumber;
 }
+
+
 
 void Account::deposit(double amount)
 {
