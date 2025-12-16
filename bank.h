@@ -25,7 +25,7 @@ public:
 
 class Account
 {
-    
+
     int accountNumber;
 
 protected:
@@ -42,31 +42,29 @@ public:
     void printStatement();
 };
 
-
 class SavingsAccount : public Account
 {
-    public:
+public:
     SavingsAccount(int id);
-    private:
+
+private:
     double interestRate;
     void applyInterest();
 
-public:
-    SavingsAccount(int id);
     void withdraw(double amount);
 };
 
 class CheckingAccount : public Account
 {
-    public:
+public:
     CheckingAccount(int id);
-    private:
+
+private:
     double overdraftLimit;
 
 public:
     void withdraw(double amount);
 };
-
 
 class AccountFactory
 {
@@ -82,7 +80,6 @@ class SavingsAccountFactory : public AccountFactory
 {
     Account *createAccount(int id);
 };
-
 
 class Customer
 {
@@ -105,5 +102,3 @@ public:
     void createCustomer(string name);
     void openAccount(AccountFactory *factory, int customerId);
 };
-
-
