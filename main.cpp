@@ -5,54 +5,58 @@ using namespace std;
 
 int main()
 {
-    // 1. Setup Bank
+    // 1. Create Bank
     Bank myBank;
 
-    // 2. Create a Customer
+    // 2. Create Customer
+    cout << "--- Creating Customer ---" << endl;
     myBank.createCustomer("Osama");
-    // We assume the ID generated is accessible or printed.
-    // For this test, let's assume the ID generated was handled internally or we just guess it's the first one.
-    // NOTE: In your code, createCustomer generates a random ID.
-    // You might want to print that ID so the user knows what it is!
 
-    int customerId = myBank.Customers[0].getCustomerId(); // Hack to get the ID for testing
-    cout << "Customer created with ID: " << customerId << endl;
+    // Get the ID of the customer we just created
+    // Note: In a real app, you would know the ID or search by name.
+    int osamaId = myBank.Customers.back().getCustomerId();
 
-    // 3. Use the FACTORY PATTERN to create accounts
+    // 3. Create Accounts using Factories
+    cout << "\n--- Opening Accounts ---" << endl;
 
-    // Create a Savings Account
     SavingsAccountFactory savingsFactory;
-    myBank.openAccount(&savingsFactory, customerId);
+    myBank.openAccount(&savingsFactory, osamaId);
 
-    // Create a Checking Account
     CheckingAccountFactory checkingFactory;
-    myBank.openAccount(&checkingFactory, customerId);
+    myBank.openAccount(&checkingFactory, osamaId);
 
-    // 4. Retrieve the Customer pointer
+    // 4. Test Logic
+    cout << "\n--- Testing Transactions ---" << endl;
+
+    // Retrieve the customer pointer
     Customer *osama = nullptr;
     for (auto &c : myBank.Customers)
     {
-        if (c.getCustomerId() == customerId)
+        if (c.getCustomerId() == osamaId)
             osama = &c;
     }
 
-    // 5. Test Operations
     if (osama)
     {
-        // Get the first account (Savings)
-        Account *acc1 = osama->getAccount(0);
-        cout << "\n--- Testing Savings (Acc ID: " << acc1->getAccountNumber() << ") ---" << endl;
-        acc1->deposit(500);
-        acc1->withdraw(200);
-        acc1->withdraw(1000); // Should Fail
+        // Test Savings (First account)
+        if (!osama->Accounts.empty())
+        {
+            Account *savAcc = osama->Accounts[0];
+            cout << "Testing Savings Account (ID: " << savAcc->getAccountNumber() << ")" << endl;
+            savAcc->deposit(1000);
+            savAcc->withdraw(1500); // Should fail
+            savAcc->withdraw(200);  // Should pass
+        }
 
-        // Get the second account (Checking)
-        Account *acc2 = osama->getAccount(1);
-        cout << "\n--- Testing Checking (Acc ID: " << acc2->getAccountNumber() << ") ---" << endl;
-        acc2->deposit(100);
-        acc2->withdraw(400); // Should Work (Overdraft)
-
-        acc2->printStatement();
+        // Test Checking (Second account)
+        if (osama->Accounts.size() > 1)
+        {
+            Account *checkAcc = osama->Accounts[1];
+            cout << "\nTesting Checking Account (ID: " << checkAcc->getAccountNumber() << ")" << endl;
+            checkAcc->deposit(100);
+            checkAcc->withdraw(400); // Should pass (Overdraft)
+            checkAcc->printStatement();
+        }
     }
 
     return 0;

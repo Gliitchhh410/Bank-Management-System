@@ -83,10 +83,10 @@ class SavingsAccountFactory : public AccountFactory
 class Customer
 {
     int customerId;
-    vector<Account *> Accounts;
     string name;
 
 public:
+    vector<Account *> Accounts;
     void setName(string);
     void setCustomerId(int);
     int getCustomerId();
