@@ -55,7 +55,13 @@ Completed Phase 1 (Core Logic)
 
 - [x] Implement Factory Logic for Account creation
 
-- [x] Implement a working prototype for Customer/Account/Transactions Classes
+- [x] Implement constructors for Customer/Account/Transactions Classes
+
+- [ ] Implement concrete methods implementation for Customer/Account/Transactions Classes
+
+- [ ] Implement `Singleton` pattern in `Bank` class
+
+- [ ] Implement `Strategy` pattern in Savings Account profit 
 
 Phase 2 (Upcoming Features)
 
