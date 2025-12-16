@@ -119,6 +119,13 @@ void Account::addTransaction(TRANSACTION_TYPE type, double amount){
 }
 
 
+int Account::getAccountNumber(){
+    return accountNumber;
+}
+
+
+
+
 
 /*----------------------------------CheckingAccount---------------------------------------*/
 
