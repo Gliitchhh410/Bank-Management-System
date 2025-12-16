@@ -57,7 +57,7 @@ Completed Phase 1 (Core Logic)
 
 - [x] Implement constructors for Customer/Account/Transactions Classes
 
-- [ ] Implement concrete methods implementation for Customer/Account/Transactions Classes
+- [x] Implement concrete methods implementation for Customer/Account/Transactions Classes
 
 - [ ] Implement `Singleton` pattern in `Bank` class
 
