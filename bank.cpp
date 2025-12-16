@@ -4,8 +4,6 @@
 #include "bank.h"
 using namespace std;
 
-
-
 /*----------------------------------Bank---------------------------------------*/
 
 void Bank::openAccount(AccountFactory *factory, int customerId)
@@ -48,10 +46,7 @@ void Bank::createCustomer(string name)
     Customers.push_back(move(newCustomer)); // move for passing objects without creating extra copies
 }
 
-
 /*----------------------------------Customer---------------------------------------*/
-
-
 
 void Customer::setName(string n)
 {
@@ -86,8 +81,6 @@ Account *Customer::getAccount(int accountNumber)
     return nullptr;
 }
 
-
-
 /*----------------------------------Transaction---------------------------------------*/
 string Transaction::getDetails()
 {
@@ -101,40 +94,46 @@ Transaction::Transaction(int transactionId, double amount, TRANSACTION_TYPE type
     this->type = type;
 }
 
-
-
-
 /*----------------------------------Account---------------------------------------*/
 
-
-Account::Account(int accNum){
+Account::Account(int accNum)
+{
     this->balance = 0.0;
     this->accountNumber = accNum;
 }
 
-void Account::addTransaction(TRANSACTION_TYPE type, double amount){
+void Account::addTransaction(TRANSACTION_TYPE type, double amount)
+{
     int txId = rand() % 10000;
     Transaction newTx(txId, amount, type);
     transactionHistroy.push_back(newTx);
 }
 
-
-int Account::getAccountNumber(){
+int Account::getAccountNumber()
+{
     return accountNumber;
 }
 
-
-void Account::deposit(double amount){
-    if (amount < 0) cout << "Invalid negative deposit";
+void Account::deposit(double amount)
+{
+    if (amount < 0)
+        cout << "Invalid negative deposit";
 
     balance += amount;
     addTransaction(DEPOSIT, amount);
     cout << "Deposited: " << amount << ". New Balance: " << balance << endl;
 }
 
-
-
-
+void Account::printStatement()
+{
+    cout << "--- Statement for Account " << accountNumber << " ---" << endl;
+    cout << "Current Balance: " << balance << endl;
+    for (auto &tx : transactionHistroy)
+    {
+        cout << tx.getDetails() << endl;
+        cout << "-----------------------------------" << endl;
+    }
+}
 
 /*----------------------------------CheckingAccount---------------------------------------*/
 
@@ -143,20 +142,18 @@ Account *CheckingAccountFactory::createAccount(int id)
     return new CheckingAccount(id);
 }
 
-
-CheckingAccount::CheckingAccount(int id): Account(id){
+CheckingAccount::CheckingAccount(int id) : Account(id)
+{
     this->overdraftLimit = 500.0;
 }
 
-
-
 /*----------------------------------SavingsAccount---------------------------------------*/
 
-SavingsAccount::SavingsAccount(int id): Account(id){
+SavingsAccount::SavingsAccount(int id) : Account(id)
+{
     this->interestRate = 0.05;
 }
 Account *SavingsAccountFactory::createAccount(int id)
 {
     return new SavingsAccount(id);
 }
-
