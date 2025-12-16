@@ -46,12 +46,11 @@ class SavingsAccount : public Account
 {
 public:
     SavingsAccount(int id);
+    void withdraw(double amount);
 
 private:
     double interestRate;
     void applyInterest();
-
-    void withdraw(double amount);
 };
 
 class CheckingAccount : public Account

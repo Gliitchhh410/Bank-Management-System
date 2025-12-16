@@ -102,8 +102,7 @@ Account::Account(int accNum)
     this->accountNumber = accNum;
 }
 
-Account::~Account(){};
-
+Account::~Account() {};
 
 void Account::addTransaction(TRANSACTION_TYPE type, double amount)
 {
@@ -116,8 +115,6 @@ int Account::getAccountNumber()
 {
     return accountNumber;
 }
-
-
 
 void Account::deposit(double amount)
 {
@@ -147,17 +144,20 @@ Account *CheckingAccountFactory::createAccount(int id)
     return new CheckingAccount(id);
 }
 
-void CheckingAccount::withdraw(double amount){
-    if (balance + overdraftLimit >= amount ){
+
+void CheckingAccount::withdraw(double amount)
+{
+    if (balance + overdraftLimit >= amount)
+    {
         balance -= amount;
         addTransaction(WITHDRAW, amount);
         cout << "Withdrew: " << amount << ". New Balance: " << balance << endl;
     }
-    else {
+    else
+    {
         cout << "Error: Exceeded Overdraft Limit" << endl;
     }
 }
-
 
 CheckingAccount::CheckingAccount(int id) : Account(id)
 {
@@ -171,14 +171,17 @@ SavingsAccount::SavingsAccount(int id) : Account(id)
     this->interestRate = 0.05;
 }
 
-void SavingsAccount::withdraw(double amount){
-    if (balance >= amount){
+
+void SavingsAccount::withdraw(double amount)
+{
+    if (balance >= amount)
+    {
         balance -= amount;
         addTransaction(WITHDRAW, amount);
         cout << "Withdrew: " << amount << ". New Balance: " << balance << endl;
-
     }
-    else {
+    else
+    {
         cout << "Error: Insufficient funds (Savings)" << endl;
     }
 }
