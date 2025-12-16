@@ -112,6 +112,12 @@ Account::Account(int accNum){
     this->accountNumber = accNum;
 }
 
+void Account::addTransaction(TRANSACTION_TYPE type, double amount){
+    int txId = rand() % 10000;
+    Transaction newTx(txId, amount, type);
+    transactionHistroy.push_back(newTx);
+}
+
 
 
 /*----------------------------------CheckingAccount---------------------------------------*/
