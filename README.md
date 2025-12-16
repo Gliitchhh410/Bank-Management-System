@@ -61,7 +61,9 @@ Completed Phase 1 (Core Logic)
 
 - [ ] Implement `Singleton` pattern in `Bank` class
 
-- [ ] Implement `Strategy` pattern in Savings Account profit 
+- [ ] Implement `Strategy` pattern in Savings Account profit
+
+- [ ] Implement `Observer` pattern to notify customers whenever the balance changes
 
 Phase 2 (Upcoming Features)
 
