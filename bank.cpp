@@ -124,6 +124,15 @@ int Account::getAccountNumber(){
 }
 
 
+void Account::deposit(double amount){
+    if (amount < 0) cout << "Invalid negative deposit";
+
+    balance += amount;
+    addTransaction(DEPOSIT, amount);
+    cout << "Deposited: " << amount << ". New Balance: " << balance << endl;
+}
+
+
 
 
 
