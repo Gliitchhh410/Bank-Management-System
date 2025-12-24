@@ -39,7 +39,7 @@ The project follows a modular design emphasizing the **SOLID** principles.
 - **Language:** C++ (Standard 11/14+)
 - **Polymorphism:** Usage of `virtual` functions for `withdraw()` logic and `virtual` destructors for safe memory cleanup.
 - **Encapsulation:** Protected members (`balance`) allow derived classes access while hiding data from the public scope.
-- **Design Pattern:** Uses the **Factory Design Pattern** in `Bank::openAccount` to decouple object creation from client code. 
+- **Design Pattern:** Uses the **Factory Design Pattern** in `Bank::openAccount` to decouple object creation from client code.
 
 ## Todo List & Roadmap
 
@@ -59,7 +59,7 @@ Completed Phase 1 (Core Logic)
 
 - [x] Implement concrete methods implementation for Customer/Account/Transactions Classes
 
-- [ ] Implement concrete methods implementation for Transfers between accounts
+- [ ] Implement concrete methods implementation for Transfers between accounts using Multi threading
 
 - [ ] Implement `Singleton` pattern in `Bank` class
 
