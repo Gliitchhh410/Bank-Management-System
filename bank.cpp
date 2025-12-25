@@ -46,6 +46,17 @@ void Bank::createCustomer(string name)
     Customers.push_back(move(newCustomer)); // move for passing objects without creating extra copies
 }
 
+
+Bank::Bank(){}
+
+Bank* Bank::instance = nullptr;
+
+ Bank* Bank::getInstance(){
+    if (instance == nullptr){
+        instance = new Bank(); // can only be initialized here
+    }
+ }
+
 /*----------------------------------Customer---------------------------------------*/
 
 void Customer::setName(string n)

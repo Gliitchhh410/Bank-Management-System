@@ -96,7 +96,15 @@ public:
 
 class Bank
 {
+private:
+    Bank();
+    static Bank* instance;
 public:
+    Bank(const Bank&) = delete ; //delete constructing through copy and assignment
+    void operator=(const Bank&) = delete;
+
+    
+    static Bank* getInstance();
     vector<Customer> Customers;
     void createCustomer(string name);
     void openAccount(AccountFactory *factory, int customerId);
