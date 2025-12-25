@@ -61,7 +61,7 @@ Completed Phase 1 (Core Logic)
 
 - [ ] Implement concrete methods implementation for Transfers between accounts using Multi threading
 
-- [ ] Implement `Singleton` pattern in `Bank` class
+- [x] Implement `Singleton` pattern in `Bank` class
 
 - [ ] Implement `Strategy` pattern in Savings Account profit
 
