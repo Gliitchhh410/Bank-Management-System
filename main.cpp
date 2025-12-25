@@ -6,31 +6,31 @@ using namespace std;
 int main()
 {
     // 1. Create Bank
-    Bank myBank;
+    Bank *myBank = Bank::getInstance();
 
     // 2. Create Customer
     cout << "--- Creating Customer ---" << endl;
-    myBank.createCustomer("Osama");
+    myBank->createCustomer("Osama");
 
     // Get the ID of the customer we just created
     // Note: In a real app, you would know the ID or search by name.
-    int osamaId = myBank.Customers.back().getCustomerId();
+    int osamaId = myBank->Customers.back().getCustomerId();
 
     // 3. Create Accounts using Factories
     cout << "\n--- Opening Accounts ---" << endl;
 
     SavingsAccountFactory savingsFactory;
-    myBank.openAccount(&savingsFactory, osamaId);
+    myBank->openAccount(&savingsFactory, osamaId);
 
     CheckingAccountFactory checkingFactory;
-    myBank.openAccount(&checkingFactory, osamaId);
+    myBank->openAccount(&checkingFactory, osamaId);
 
     // 4. Test Logic
     cout << "\n--- Testing Transactions ---" << endl;
 
     // Retrieve the customer pointer
     Customer *osama = nullptr;
-    for (auto &c : myBank.Customers)
+    for (auto &c : myBank->Customers)
     {
         if (c.getCustomerId() == osamaId)
             osama = &c;
