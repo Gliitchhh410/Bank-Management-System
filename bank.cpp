@@ -56,6 +56,7 @@ Bank *Bank::getInstance()
     {
         instance = new Bank(); // can only be initialized here
     }
+    return instance
 }
 
 /*----------------------------------Customer---------------------------------------*/
