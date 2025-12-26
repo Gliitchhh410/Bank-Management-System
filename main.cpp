@@ -1,62 +1,52 @@
 #include <iostream>
+#include <thread> // Required for creating threads
 #include "bank.h"
+
 using namespace std;
+
+// This is a "worker function" that the thread will execute
+void attemptWithdraw(Account *acc, double amount)
+{
+    // This thread simulates a user trying to withdraw money
+    cout << "Thread: Attempting to withdraw " << amount << "..." << endl;
+    acc->withdraw(amount);
+}
 
 int main()
 {
-    // 1. Create Bank
+    // 1. Setup Bank (Singleton)
     Bank *myBank = Bank::getInstance();
+    myBank->createCustomer("SharedUser");
+    int userId = myBank->Customers.back().getCustomerId();
 
-    // 2. Create Customer
-    cout << "--- Creating Customer ---" << endl;
-    myBank->createCustomer("Osama");
+    SavingsAccountFactory factory;
+    myBank->openAccount(&factory, userId);
 
-    // Get the ID of the customer we just created
-    // Note: In a real app, you would know the ID or search by name.
-    int osamaId = myBank->Customers.back().getCustomerId();
+    Customer *user = &myBank->Customers.back();
+    Account *sharedAcc = user->Accounts[0];
 
-    // 3. Create Accounts using Factories
-    cout << "\n--- Opening Accounts ---" << endl;
+    // 2. Initial Deposit: 1000
+    cout << "\n--- Initial Deposit ---" << endl;
+    sharedAcc->deposit(1000);
 
-    SavingsAccountFactory savingsFactory;
-    myBank->openAccount(&savingsFactory, osamaId);
+    // 3. START MULTITHREADING
+    cout << "\n--- Starting Concurrent Withdrawals ---" << endl;
+    cout << "Scenario: Two threads trying to withdraw 800 each at the EXACT same time." << endl;
 
-    CheckingAccountFactory checkingFactory;
-    myBank->openAccount(&checkingFactory, osamaId);
+    // Create Thread 1 (e.g., ATM)
+    thread t1(attemptWithdraw, sharedAcc, 800);
 
-    // 4. Test Logic
-    cout << "\n--- Testing Transactions ---" << endl;
+    // Create Thread 2 (e.g., Mobile App)
+    thread t2(attemptWithdraw, sharedAcc, 800);
 
-    // Retrieve the customer pointer
-    Customer *osama = nullptr;
-    for (auto &c : myBank->Customers)
-    {
-        if (c.getCustomerId() == osamaId)
-            osama = &c;
-    }
+    // 4. WAIT for threads to finish (Join)
+    // "Join" blocks the main function until t1 and t2 are done.
+    t1.join();
+    t2.join();
 
-    if (osama)
-    {
-        // Test Savings (First account)
-        if (!osama->Accounts.empty())
-        {
-            Account *savAcc = osama->Accounts[0];
-            cout << "Testing Savings Account (ID: " << savAcc->getAccountNumber() << ")" << endl;
-            savAcc->deposit(1000);
-            savAcc->withdraw(1500); // Should fail
-            savAcc->withdraw(200);  // Should pass
-        }
-
-        // Test Checking (Second account)
-        if (osama->Accounts.size() > 1)
-        {
-            Account *checkAcc = osama->Accounts[1];
-            cout << "\nTesting Checking Account (ID: " << checkAcc->getAccountNumber() << ")" << endl;
-            checkAcc->deposit(100);
-            checkAcc->withdraw(400); // Should pass (Overdraft)
-            checkAcc->printStatement();
-        }
-    }
+    // 5. Final Result
+    cout << "\n--- Final Result ---" << endl;
+    sharedAcc->printStatement();
 
     return 0;
 }
