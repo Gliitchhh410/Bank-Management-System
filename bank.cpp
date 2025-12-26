@@ -46,16 +46,17 @@ void Bank::createCustomer(string name)
     Customers.push_back(move(newCustomer)); // move for passing objects without creating extra copies
 }
 
+Bank::Bank() {}
 
-Bank::Bank(){}
+Bank *Bank::instance = nullptr;
 
-Bank* Bank::instance = nullptr;
-
- Bank* Bank::getInstance(){
-    if (instance == nullptr){
+Bank *Bank::getInstance()
+{
+    if (instance == nullptr)
+    {
         instance = new Bank(); // can only be initialized here
     }
- }
+}
 
 /*----------------------------------Customer---------------------------------------*/
 
@@ -140,6 +141,7 @@ void Account::deposit(double amount)
 
 void Account::printStatement()
 {
+    lock_guard<mutex> lock(accMutex);
     cout << "--- Statement for Account " << accountNumber << " ---" << endl;
     cout << "Current Balance: " << balance << endl;
     for (auto &tx : transactionHistroy)
@@ -155,7 +157,6 @@ Account *CheckingAccountFactory::createAccount(int id)
 {
     return new CheckingAccount(id);
 }
-
 
 void CheckingAccount::withdraw(double amount)
 {
@@ -182,7 +183,6 @@ SavingsAccount::SavingsAccount(int id) : Account(id)
 {
     this->interestRate = 0.05;
 }
-
 
 void SavingsAccount::withdraw(double amount)
 {
