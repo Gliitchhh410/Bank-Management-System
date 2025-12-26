@@ -129,6 +129,7 @@ int Account::getAccountNumber()
 
 void Account::deposit(double amount)
 {
+    lock_guard<mutex> lock(accMutex);
     if (amount < 0)
         cout << "Invalid negative deposit";
 
