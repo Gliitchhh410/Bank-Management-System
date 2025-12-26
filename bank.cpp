@@ -160,6 +160,7 @@ Account *CheckingAccountFactory::createAccount(int id)
 
 void CheckingAccount::withdraw(double amount)
 {
+    lock_guard<mutex> lock(accMutex);
     if (balance + overdraftLimit >= amount)
     {
         balance -= amount;
@@ -186,6 +187,7 @@ SavingsAccount::SavingsAccount(int id) : Account(id)
 
 void SavingsAccount::withdraw(double amount)
 {
+    lock_guard<mutex> lock(accMutex);
     if (balance >= amount)
     {
         balance -= amount;
