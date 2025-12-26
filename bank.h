@@ -1,6 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+
+#include <mutex>
+
 using namespace std;
 
 class Account;
@@ -40,6 +43,7 @@ public:
     virtual void withdraw(double amount) = 0;
     virtual ~Account();
     void printStatement();
+    mutex accMutex;
 };
 
 class SavingsAccount : public Account
