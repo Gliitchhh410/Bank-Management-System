@@ -59,7 +59,7 @@ Completed Phase 1 (Core Logic)
 
 - [x] Implement concrete methods implementation for Customer/Account/Transactions Classes
 
-- [ ] Implement concrete methods implementation for Transfers between accounts using Multi threading
+- [x] Implement concrete methods implementation for Transfers between accounts using Multi threading
 
 - [x] Implement `Singleton` pattern in `Bank` class
 
