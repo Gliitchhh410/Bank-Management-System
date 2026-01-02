@@ -129,11 +129,83 @@ int Account::getAccountNumber()
     return accountNumber;
 }
 
+Account *Account::getAccountByAccountNumber(int accNum)
+{
+    Bank *Bank = Bank::getInstance();
+    for (auto &cust : Bank->Customers)
+    {
+        for (auto &acc : cust.Accounts)
+        {
+            if (acc->getAccountNumber() == accNum)
+            {
+                return acc;
+            }
+        }
+    }
+    return nullptr;
+}
+
+void Account::setAccountNumber(int accNum)
+{
+    accountNumber = accNum;
+}
+
+bool Account::Transfer(int accNum, double Amount)
+{
+    Account *toAccount = Account::getAccountByAccountNumber(accNum);
+    if (toAccount == nullptr)
+    {
+        cout << "Transfer Failed: Wrong Account Number" << endl;
+        return false;
+    }
+
+    if (this == toAccount)
+    {
+        cout << "Error: Cannot transfer to self." << endl;
+        return false;
+    }
+
+    lock(this->accMutex, toAccount->accMutex);
+    lock_guard<mutex> lock1(this->accMutex, adopt_lock);
+    lock_guard<mutex> lock2(toAccount->accMutex, adopt_lock);
+
+    bool canWithdraw = false;
+
+    if (this->balance > Amount)
+    {
+        canWithdraw = true;
+    }
+    else
+    {
+        CheckingAccount *ca = dynamic_cast<CheckingAccount *>(this);
+        if (ca && (this->balance + 500.0 >= Amount))
+        {
+            canWithdraw = true;
+        }
+    }
+
+    if (canWithdraw)
+    {
+        this->balance -= Amount;
+        toAccount->balance += Amount;
+
+        this->addTransaction(TRANSFER_OUT, Amount);
+        toAccount->addTransaction(TRANSFER_IN, Amount);
+
+        cout << "Transfer of " << Amount << " successful!" << endl;
+        return true;
+    }
+
+    cout << "Transfer failed: Insufficient funds." << endl;
+    return false;
+}
+
 void Account::deposit(double amount)
 {
     lock_guard<mutex> lock(accMutex);
     if (amount < 0)
         cout << "Invalid negative deposit";
+    return;
 
     balance += amount;
     addTransaction(DEPOSIT, amount);
@@ -159,7 +231,7 @@ Account *CheckingAccountFactory::createAccount(int id)
     return new CheckingAccount(id);
 }
 
-void CheckingAccount::withdraw(double amount)
+bool CheckingAccount::withdraw(double amount)
 {
     lock_guard<mutex> lock(accMutex);
     if (balance + overdraftLimit >= amount)
@@ -167,10 +239,12 @@ void CheckingAccount::withdraw(double amount)
         balance -= amount;
         addTransaction(WITHDRAW, amount);
         cout << "Withdrew: " << amount << ". New Balance: " << balance << endl;
+        return true;
     }
     else
     {
         cout << "Error: Exceeded Overdraft Limit" << endl;
+        return false;
     }
 }
 
@@ -186,7 +260,7 @@ SavingsAccount::SavingsAccount(int id) : Account(id)
     this->interestRate = 0.05;
 }
 
-void SavingsAccount::withdraw(double amount)
+bool SavingsAccount::withdraw(double amount)
 {
     lock_guard<mutex> lock(accMutex);
     if (balance >= amount)
@@ -194,10 +268,12 @@ void SavingsAccount::withdraw(double amount)
         balance -= amount;
         addTransaction(WITHDRAW, amount);
         cout << "Withdrew: " << amount << ". New Balance: " << balance << endl;
+        return true;
     }
     else
     {
         cout << "Error: Insufficient funds (Savings)" << endl;
+        return false;
     }
 }
 Account *SavingsAccountFactory::createAccount(int id)

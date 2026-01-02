@@ -1,52 +1,60 @@
 #include <iostream>
-#include <thread> // Required for creating threads
+#include <thread>
 #include "bank.h"
 
 using namespace std;
 
-// This is a "worker function" that the thread will execute
-void attemptWithdraw(Account *acc, double amount)
-{
-    // This thread simulates a user trying to withdraw money
-    cout << "Thread: Attempting to withdraw " << amount << "..." << endl;
-    acc->withdraw(amount);
-}
-
 int main()
 {
-    // 1. Setup Bank (Singleton)
     Bank *myBank = Bank::getInstance();
-    myBank->createCustomer("SharedUser");
-    int userId = myBank->Customers.back().getCustomerId();
 
-    SavingsAccountFactory factory;
-    myBank->openAccount(&factory, userId);
+    // 1. Create two customers
+    myBank->createCustomer("Alice");
+    myBank->createCustomer("Bob");
 
-    Customer *user = &myBank->Customers.back();
-    Account *sharedAcc = user->Accounts[0];
+    // In a real app, we'd search by name, but here we grab the IDs directly
+    int aliceId = myBank->Customers[0].getCustomerId();
+    int bobId = myBank->Customers[1].getCustomerId();
 
-    // 2. Initial Deposit: 1000
-    cout << "\n--- Initial Deposit ---" << endl;
-    sharedAcc->deposit(1000);
+    // 2. Give them accounts
+    CheckingAccountFactory checkingFactory;
 
-    // 3. START MULTITHREADING
-    cout << "\n--- Starting Concurrent Withdrawals ---" << endl;
-    cout << "Scenario: Two threads trying to withdraw 800 each at the EXACT same time." << endl;
+    // Alice gets an account
+    myBank->openAccount(&checkingFactory, aliceId);
 
-    // Create Thread 1 (e.g., ATM)
-    thread t1(attemptWithdraw, sharedAcc, 800);
+    // Bob gets an account
+    myBank->openAccount(&checkingFactory, bobId);
 
-    // Create Thread 2 (e.g., Mobile App)
-    thread t2(attemptWithdraw, sharedAcc, 800);
+    // 3. Get pointers to accounts (for testing/setup)
+    Account *aliceAcc = myBank->Customers[0].Accounts[0];
+    Account *bobAcc = myBank->Customers[1].Accounts[0];
 
-    // 4. WAIT for threads to finish (Join)
-    // "Join" blocks the main function until t1 and t2 are done.
-    t1.join();
-    t2.join();
+    // 4. Setup Money
+    aliceAcc->deposit(1000); // Alice has 1000
+    bobAcc->deposit(500);    // Bob has 500
 
-    // 5. Final Result
-    cout << "\n--- Final Result ---" << endl;
-    sharedAcc->printStatement();
+    cout << "\n--- Before Transfer ---" << endl;
+    cout << "Alice Balance: 1000" << endl;
+    cout << "Bob Balance: 500" << endl;
+
+    // 5. Perform Transfer (Alice -> Bob)
+    // CRITICAL UPDATE: We now pass the Account Number (int), not the pointer.
+    cout << "\n--- Transferring 300 from Alice to Bob ---" << endl;
+    bool result = aliceAcc->Transfer(bobAcc->getAccountNumber(), 300);
+
+    if (result)
+    {
+        cout << "Transaction Completed!" << endl;
+    }
+    else
+    {
+        cout << "Transaction Failed!" << endl;
+    }
+
+    // 6. Verify with Statements
+    cout << "\n--- Final Statements ---" << endl;
+    aliceAcc->printStatement();
+    bobAcc->printStatement();
 
     return 0;
 }

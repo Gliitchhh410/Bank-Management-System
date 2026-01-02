@@ -12,7 +12,9 @@ class Customer;
 enum TRANSACTION_TYPE
 {
     WITHDRAW,
-    DEPOSIT
+    DEPOSIT,
+    TRANSFER_OUT,
+    TRANSFER_IN
 };
 
 class Transaction
@@ -39,8 +41,11 @@ protected:
 public:
     Account(int accNum);
     int getAccountNumber();
+    void setAccountNumber(int accNum);
     void deposit(double amount);
-    virtual void withdraw(double amount) = 0;
+    virtual bool withdraw(double amount) = 0;
+    static Account *getAccountByAccountNumber(int accNum);
+    bool Transfer(int accNum, double Amount);
     virtual ~Account();
     void printStatement();
     mutex accMutex;
@@ -50,7 +55,7 @@ class SavingsAccount : public Account
 {
 public:
     SavingsAccount(int id);
-    void withdraw(double amount);
+    bool withdraw(double amount);
 
 private:
     double interestRate;
@@ -66,7 +71,7 @@ private:
     double overdraftLimit;
 
 public:
-    void withdraw(double amount);
+    bool withdraw(double amount);
 };
 
 class AccountFactory
@@ -102,13 +107,13 @@ class Bank
 {
 private:
     Bank();
-    static Bank* instance;
-public:
-    Bank(const Bank&) = delete ; //delete constructing through copy and assignment
-    void operator=(const Bank&) = delete;
+    static Bank *instance;
 
-    
-    static Bank* getInstance();
+public:
+    Bank(const Bank &) = delete; // delete constructing through copy and assignment
+    void operator=(const Bank &) = delete;
+
+    static Bank *getInstance();
     vector<Customer> Customers;
     void createCustomer(string name);
     void openAccount(AccountFactory *factory, int customerId);
